@@ -1,0 +1,153 @@
+/* ================================================================ */
+/*  $7.6 - Custom Components - ANB Comparison Table                 */
+/* ================================================================ */
+.anb-comparison-table {
+    --rows-count: 0;
+
+    display: grid;
+    position: relative;
+    grid-template-columns: min-content 1fr;
+}
+
+.anb-comparison-table__content {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-stop: always;
+    scroll-snap-type: x mandatory;
+}
+
+.anb-comparison-table__columns {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(var(--rows-count), minmax(48px, auto));
+    padding-bottom: var(--space-xs);
+    cursor: pointer;
+}
+
+.anb-comparison-table__row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-s) var(--space-base);
+    text-align: center;
+    background-color: var(--color-secondary-4);
+    border-bottom: var(--border-size-s) solid var(--color-secondary-3);
+    position: relative;
+    scroll-snap-align: end;
+}
+
+.anb-comparison-table__column :first-child:not(.list) .anb-comparison-table__row {
+    padding-top: var(--space-base);
+}
+
+.anb-comparison-table__column :last-child:not(.list) .anb-comparison-table__row {
+    padding-bottom: var(--space-base);
+}
+
+.anb-comparison-table__columns .anb-comparison-table--is-legend .anb-comparison-table__row {
+    width: 0;
+    min-width: 0;
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.anb-comparison-table--is-selected {
+    .anb-comparison-table__row::after {
+        content: "";
+        pointer-events: none;
+        border-right: var(--border-size-m) solid var(--color-primary-3);
+        border-left: var(--border-size-m) solid var(--color-primary-3);
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: -1px;
+        left: 0;
+    }
+
+    .list :first-child .anb-comparison-table__row::after,
+    :first-child:not(.list) .anb-comparison-table__row::after {
+        border-top: var(--border-size-m) solid var(--color-primary-3);
+        border-top-left-radius: var(--border-radius-soft);
+        border-top-right-radius: var(--border-radius-soft);
+    }
+
+    .list :last-child .anb-comparison-table__row::after,
+    :last-child:not(.list) .anb-comparison-table__row::after {
+        border-bottom: var(--border-size-m) solid var(--color-primary-3);
+        border-bottom-right-radius: var(--border-radius-soft);
+        border-bottom-left-radius: var(--border-radius-soft);
+    }
+}
+
+.anb-comparison-table--hide-border {
+    border-bottom-color: transparent;
+}
+
+.anb-comparison-table__legend .anb-comparison-table__row {
+    justify-content: flex-start;
+    text-align: start;
+    padding-inline-end: var(--space-m);
+    padding-inline-start: var(--space-none);
+    z-index: 1;
+}
+
+.anb-comparison-table {
+    --scroll-edge-start: 0px;
+    --scrollbar-height: 0px;
+    position: relative;
+
+    &::before,
+    &::after {
+        content: "";
+        display: block;
+        width: 30px;
+        height: calc(100% - var(--scrollbar-height, 0px));
+        pointer-events: none;
+        opacity: 1;
+        transition: opacity 100ms ease-out;
+        position: absolute;
+        top: 0;
+        z-index: 2;
+    }
+
+    &::before {
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent 15%);
+        left: var(--scroll-edge-start);
+    }
+
+    &::after {
+        background-image: linear-gradient(to left, rgba(0, 0, 0, 0.2), transparent 15%);
+        right: 0;
+    }
+}
+
+.anb-comparison-table--has-scroll-start::before,
+.anb-comparison-table--has-scroll-end::after {
+    opacity: 0;
+}
+
+.is-rtl .anb-comparison-table::before {
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.2), transparent 15%);
+    left: unset;
+    right: var(--scroll-edge-start);
+}
+
+.is-rtl .anb-comparison-table::after {
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent 15%);
+    left: 0;
+    right: unset;
+}
+
+// Treat these elements as if they didn't exist
+.anb-comparison-table .list,
+.anb-comparison-table .list > [data-block],
+.anb-comparison-table__column,
+.anb-comparison-table__column > [data-block],
+[data-block*="ComparisonTableColumn"],
+[data-block*="ComparisonTableRow"] {
+    display: contents;
+}

@@ -1,0 +1,240 @@
+:root {
+    --space-none: 0;
+    --space-xs: 4px;
+    --space-s: 8px;
+    --space-base: 16px;
+    --space-m: 20px;
+    --space-l: 24px;
+    --color-primary-3: #0072dd;
+    --color-secondary-3: #e5e6e5;
+    --color-secondary-4: #fff;
+    --border-size-s: 1px;
+    --border-size-m: 3px;
+    --border-radius-soft: 8px;
+    --font-size-s: 14px;
+    --font-size-base: 16px;
+    --header-height: 64px;
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+    font-family: sans-serif;
+    background-color: #f3f3f3;
+    margin: 0;
+    font-size: var(--font-size-s);
+    height: 100vh;
+}
+
+h2 {
+    margin: 0.5em 0 1em;
+}
+
+main {
+    padding: 1em;
+    padding-top: calc(var(--header-height) + var(--space-base));
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: var(--header-height);
+    padding: var(--space-base);
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.menu {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-base);
+}
+
+.menu a {
+    color: var(--color-primary-3);
+    text-decoration: none;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #e3e3e3;
+    border-radius: 8px;
+    padding: 1em;
+    width: 100%;
+    max-width: 430px;
+}
+
+.card + .card {
+    margin-top: var(--space-l);
+}
+
+.white-space-nowrap {
+    white-space: nowrap;
+}
+
+/* ================================================================ */
+/*  $7.6 - Custom Components - ANB Comparison Table                 */
+/* ================================================================ */
+.anb-comparison-table {
+    --rows-count: 0;
+    position: relative;
+    display: grid;
+    grid-template-columns: min-content 1fr;
+}
+
+.anb-comparison-table__columns {
+    display: grid;
+    grid-template-rows: repeat(var(--rows-count), minmax(48px, auto));
+    grid-auto-flow: column;
+    padding-bottom: var(--space-xs);
+    cursor: pointer;
+    -servicestudio-display: flex;
+}
+
+.anb-comparison-table__row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--space-s);
+    position: relative;
+    border-bottom: var(--border-size-s) solid var(--color-secondary-3);
+    background-color: var(--color-secondary-4);
+    scroll-snap-align: end;
+}
+
+.anb-comparison-table__columns .anb-comparison-table--is-legend .anb-comparison-table__row {
+    min-width: 0;
+    width: 0;
+    overflow: hidden;
+    padding-inline: 0;
+    opacity: 0;
+}
+
+.anb-comparison-table__column :first-child.anb-comparison-table__row,
+.anb-comparison-table__column :first-child:not(.list) .anb-comparison-table__row {
+    padding-top: var(--space-base);
+}
+
+.anb-comparison-table__column :last-child.anb-comparison-table__row,
+.anb-comparison-table__column :last-child:not(.list) .anb-comparison-table__row {
+    padding-top: var(--space-none);
+    padding-bottom: var(--space-base);
+}
+
+.anb-comparison-table--is-selected .anb-comparison-table__row::after {
+    content: "";
+    border-left: var(--border-size-m) solid var(--color-primary-3);
+    border-right: var(--border-size-m) solid var(--color-primary-3);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: -1px;
+    right: 0;
+    pointer-events: none;
+}
+
+.anb-comparison-table--is-selected > :first-child.anb-comparison-table__row::after,
+.anb-comparison-table--is-selected .list :first-child .anb-comparison-table__row::after,
+.anb-comparison-table--is-selected .list :first-child.anb-comparison-table__row::after,
+.anb-comparison-table--is-selected :first-child:not(.list) .anb-comparison-table__row::after {
+    border-top: var(--border-size-m) solid var(--color-primary-3);
+    border-top-left-radius: var(--border-radius-soft);
+    border-top-right-radius: var(--border-radius-soft);
+}
+
+.anb-comparison-table--is-selected > :last-child.anb-comparison-table__row::after,
+.anb-comparison-table--is-selected .list :last-child .anb-comparison-table__row::after,
+.anb-comparison-table--is-selected .list :last-child.anb-comparison-table__row::after,
+.anb-comparison-table--is-selected :last-child:not(.list) .anb-comparison-table__row::after {
+    border-bottom: var(--border-size-m) solid var(--color-primary-3);
+    border-bottom-left-radius: var(--border-radius-soft);
+    border-bottom-right-radius: var(--border-radius-soft);
+}
+
+.anb-comparison-table--hide-border {
+    border-bottom-color: transparent;
+}
+
+.anb-comparison-table__legend .anb-comparison-table__row {
+    justify-content: flex-start;
+    min-width: 120px;
+    text-align: start;
+    padding-inline-start: var(--space-none);
+    padding-inline-end: var(--space-m);
+    inset-inline-start: 0;
+    z-index: 1;
+}
+
+.anb-comparison-table--has-scroll {
+    --scroll-edge-start: 0;
+    --scrollbar-height: 0;
+    position: relative;
+}
+
+.anb-comparison-table--has-scroll::before,
+.anb-comparison-table--has-scroll::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    width: 30px;
+    height: calc(100% - var(--scrollbar-height));
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 100ms ease-out;
+    pointer-events: none;
+}
+
+.anb-comparison-table--has-scroll::before {
+    inset-inline-start: var(--scroll-edge-start);
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent 15%);
+}
+
+.anb-comparison-table--has-scroll::after {
+    inset-inline-end: 0;
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.2), transparent 15%);
+}
+
+.anb-comparison-table--has-scroll.anb-comparison-table--has-scroll-start::before,
+.anb-comparison-table--has-scroll.anb-comparison-table--has-scroll-end::after {
+    opacity: 1;
+}
+
+.anb-comparison-table--has-scroll .anb-comparison-table__content {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scroll-snap-stop: always;
+}
+
+.is-rtl .anb-comparison-table--has-scroll::before,
+[dir=rtl] .anb-comparison-table--has-scroll::before {
+    inset-inline-start: var(--scroll-edge-start);
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.2), transparent 15%);
+}
+
+.is-rtl .anb-comparison-table--has-scroll::after,
+[dir=rtl] .anb-comparison-table--has-scroll::after {
+    inset-inline-end: 0;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent 15%);
+}
+
+.anb-comparison-table .list,
+.anb-comparison-table .list > [data-block],
+.anb-comparison-table__column,
+.anb-comparison-table__column > [data-block],
+[data-block*=ComparisonTableColumn],
+[data-block*=ComparisonTableRow] {
+    display: contents;
+}

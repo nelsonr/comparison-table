@@ -2,10 +2,10 @@ import ComparisonTable from './src/components/ComparisonTable';
 import './src/style.scss';
 
 function setupSelection (widgetId) {
-    const isSelectedClassName = 'anb-comparison-table--is-selected';
+    const isSelectedClassName = 'comparison-table--is-selected';
     const rootEl = document.getElementById(widgetId);
 
-    const columns = rootEl.querySelectorAll('.anb-comparison-table__columns .anb-comparison-table__column');
+    const columns = rootEl.querySelectorAll('.comparison-table__columns .comparison-table__column');
 
     columns.forEach((column) => {
         column.addEventListener('click', () => {
@@ -18,7 +18,7 @@ function setupSelection (widgetId) {
     });
 }
 
-const tables = document.querySelectorAll('.anb-comparison-table');
+const tables = document.querySelectorAll('.comparison-table');
 
 tables.forEach((tableEl) => {
     const id = tableEl.id;

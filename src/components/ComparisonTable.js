@@ -1,10 +1,4 @@
 function ComparisonTable () {
-    const scrollStartClassName = 'anb-comparison-table--has-scroll-start';
-    const scrollEndClassName = 'anb-comparison-table--has-scroll-end';
-
-    let resizeObserver = null;
-    let mutationObserver = null;
-
     /**
      * Create a new function by composing multiple functions together,
      * passing the result of one function as argument of another.
@@ -18,14 +12,19 @@ function ComparisonTable () {
      */
     const compose = (...fns) => (val) => fns.reduceRight((acc, fn) => fn(acc), val);
 
-    const getLegendContainer = (rootEl) => rootEl.querySelector('.anb-comparison-table__legend');
-    const getContentContainer = (rootEl) => rootEl.querySelector('.anb-comparison-table__content');
-    const getColumnsContainer = (rootEl) => rootEl.querySelector('.anb-comparison-table__columns');
-    const getLegendColumn = (parentEl) => parentEl && parentEl.querySelector('.anb-comparison-table--is-legend');
-    const getColumn = (parentEl) => parentEl && parentEl.querySelector('.anb-comparison-table__column');
-    const getRows = (parentEl) => parentEl && parentEl.querySelectorAll('.anb-comparison-table__row');
-    const getRow = (parentEl) => parentEl && parentEl.querySelector('.anb-comparison-table__row');
+    const getLegendContainer = (rootEl) => rootEl.querySelector('.comparison-table__legend');
+    const getContentContainer = (rootEl) => rootEl.querySelector('.comparison-table__content');
+    const getColumnsContainer = (rootEl) => rootEl.querySelector('.comparison-table__columns');
+    const getLegendColumn = (parentEl) => parentEl && parentEl.querySelector('.comparison-table--is-legend');
+    const getColumn = (parentEl) => parentEl && parentEl.querySelector('.comparison-table__column');
+    const getRows = (parentEl) => parentEl && parentEl.querySelectorAll('.comparison-table__row');
+    const getRow = (parentEl) => parentEl && parentEl.querySelector('.comparison-table__row');
 
+    const isScrollStartClassName = 'comparison-table--is-scroll-start';
+    const isScrollEndClassName = 'comparison-table--is-scroll-end';
+
+    let resizeObserver = null;
+    let mutationObserver = null;
 
     function updateScroll (rootEl) {
         const contentEl = getContentContainer(rootEl);
@@ -40,19 +39,19 @@ function ComparisonTable () {
         const isScrollEnd = (scrollWidth - scrollLeftNormalized - clientWidth <= 1);
 
         if (isScrollStart) {
-            rootEl.classList.add(scrollStartClassName);
+            rootEl.classList.add(isScrollStartClassName);
         } else {
-            rootEl.classList.remove(scrollStartClassName);
+            rootEl.classList.remove(isScrollStartClassName);
         }
 
         if (isScrollEnd) {
-            rootEl.classList.add(scrollEndClassName);
+            rootEl.classList.add(isScrollEndClassName);
         } else {
-            rootEl.classList.remove(scrollEndClassName);
+            rootEl.classList.remove(isScrollEndClassName);
         }
 
         // console.log("Element", contentEl);
-        console.log({ scrollWidth, scrollLeft: scrollLeftNormalized, clientWidth, isScrollStart, isScrollEnd });
+        // console.log({ scrollWidth, scrollLeft: scrollLeftNormalized, clientWidth, isScrollStart, isScrollEnd });
 
         const legendRowEl = compose(getRow, getLegendColumn, getLegendContainer)(rootEl);
 
@@ -108,12 +107,12 @@ function ComparisonTable () {
     }
 
     function setup (rootEl) {
-        const legendColumnEl = compose(getLegendColumn, getLegendContainer)(rootEl);
-
         // Set the rows count for the CSS grid
         setRowsCount(rootEl);
 
         // Set rows height to match the main content columns
+        const legendColumnEl = compose(getLegendColumn, getLegendContainer)(rootEl);
+
         if (legendColumnEl) {
             handleColumnsHeight(rootEl);
         }
